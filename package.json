@@ -1,0 +1,20 @@
+{
+  "name": "es.jacksparrot.commands",
+  "version": "1.0.0",
+  "displayName": "jacksparrot Commands",
+  "description": "Utility to comunicate your game with your server.",
+  "unity": "2018.1",
+  "unityRelease": "0f1",
+  "dependencies": {
+    "es.jacksparrot.utils": "1.0.0",
+    "es.jacksparrot.json": "1.0.0"
+ },
+ "keywords": [
+    "commands"
+  ],
+  "author": {
+    "name": "Francisco Ruiz",
+    "email": "franciscoruizpons@gmail.com",
+    "url": ""
+  } 
+}
