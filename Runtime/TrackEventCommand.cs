@@ -8,7 +8,7 @@ namespace JackSParrot.Services.Network.Commands
         {
             foreach(var kvp in data)
             {
-                Parameters[kvp.Key] = kvp.Value;
+                Parameters[kvp.Key] = kvp.Value.Clone();
             }
         }
     }
