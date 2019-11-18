@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using JackSParrot.JSON;
 
@@ -58,11 +58,26 @@ namespace JackSParrot.Services.Network.Commands
                 }
                 return;
             }
-            using(var itr = parsedResponse.GetEnumerator())
+            List<string> served = new List<string>();
+            using (var itr = parsedResponse.GetEnumerator())
             {
-                while(itr.MoveNext())
+                while (itr.MoveNext())
                 {
-                    _commands[itr.Current.Key].OnResponse(itr.Current.Value.AsObject(), error);
+                    if (_commands.ContainsKey(itr.Current.Key))
+                    {
+                        _commands[itr.Current.Key].OnResponse(itr.Current.Value.AsObject(), error);
+                        served.Add(itr.Current.Key);
+                    }
+                }
+            }
+            using (var itr = _commands.GetEnumerator())
+            {
+                while (itr.MoveNext())
+                {
+                    if (!served.Contains(itr.Current.Key))
+                    {
+                        itr.Current.Value.OnResponse(null, error ?? new NetworkError(31337, "Not Found"));
+                    }
                 }
             }
         }
