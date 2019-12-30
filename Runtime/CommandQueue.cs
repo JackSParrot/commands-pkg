@@ -69,6 +69,7 @@ namespace JackSParrot.Services.Network.Commands
         void OnPacketFinished(Petition pet, CommandPacket packet)
         {
             packet.ParseResponse(pet.GetResponse(), pet.Error);
+            Utils.SharedServices.GetService<EventTracker>().PersistPending();
         }
     }
 }

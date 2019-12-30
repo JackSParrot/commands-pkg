@@ -11,15 +11,20 @@ namespace JackSParrot.Services.Network.Commands
         protected JSONObject Parameters = new JSONObject();
         event Action<JSONObject, NetworkError> _onResponseReceived;
 
-        public Command(string name, Action<JSONObject, NetworkError> responseCallback = null, bool urgent = false)
+        public Command(string name, bool urgent = false)
         {
             IsUrgent = urgent;
             CommandName = name;
-            _onResponseReceived = responseCallback;
             Data = new JSONObject();
             Data["name"] = CommandName;
             Data["ts"] = Utils.TimeUtils.Timestamp;
             Data["data"] = Parameters;
+        }
+
+        public Command SetOnResponseCallback(Action<JSONObject, NetworkError> responseCallback)
+        {
+            _onResponseReceived = responseCallback;
+            return this;
         }
 
         public string Serialize()
