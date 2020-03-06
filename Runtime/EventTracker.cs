@@ -4,7 +4,14 @@ using System.Collections.Generic;
 
 namespace JackSParrot.Services.Network.Commands
 {
-    public class EventTracker
+    public interface IEventTracker
+    {
+        void TrackEvent(string category, string userID, JSONObject data);
+        void PersistPending();
+        void TrackPending();
+    }
+
+    public class EventTracker : IEventTracker
     {
         static uint _lastId = 0U;
         string _path = System.IO.Path.Combine(UnityEngine.Application.persistentDataPath, "tracks.json");
