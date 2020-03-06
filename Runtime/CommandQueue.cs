@@ -1,24 +1,23 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 
 namespace JackSParrot.Services.Network.Commands
 {
-    public class CommandQueue
+    public interface ICommandQueue
     {
-        public bool Paused {get; private set;}
+        void AddCommand(Command command);
+        void Send();
+        bool IsPaused();
+        void Pause();
+        void Resume();
+    }
+
+    public class CommandQueue : ICommandQueue
+    {
+        bool _paused = false;
         string _baseUrl = "";
         readonly Queue<Command> _commands = new Queue<Command>();
         IHttpClient _client = null;
         System.Text.StringBuilder _stringBuilder = new System.Text.StringBuilder();
-
-        public void SetHTTPClient(IHttpClient newClient)
-        {
-            _client = newClient;
-        }
-
-        public void SetBaseURL(string newBaseURL)
-        {
-            _baseUrl = newBaseURL;
-        }
 
         public bool Pending
         {
@@ -32,6 +31,21 @@ namespace JackSParrot.Services.Network.Commands
         {
             _baseUrl = baseUrl;
             _client = client;
+        }
+
+        public bool IsPaused()
+        {
+            return _paused;
+        }
+
+        public void Pause()
+        {
+            _paused = true;
+        }
+
+        public void Resume()
+        {
+            _paused = false;
         }
 
         public void AddCommand(Command command)
@@ -50,7 +64,7 @@ namespace JackSParrot.Services.Network.Commands
 
         void DoSend()
         {
-            if(_commands.Count < 1)
+            if(_commands.Count < 1 || _paused)
             {
                 return;
             }
@@ -69,7 +83,7 @@ namespace JackSParrot.Services.Network.Commands
         void OnPacketFinished(Petition pet, CommandPacket packet)
         {
             packet.ParseResponse(pet.GetResponse(), pet.Error);
-            Utils.SharedServices.GetService<EventTracker>().PersistPending();
+            Utils.SharedServices.GetService<EventTracker>()?.PersistPending();
         }
     }
 }
