@@ -1,10 +1,10 @@
-﻿using JackSParrot.JSON;
+using JackSParrot.JSON;
 using JackSParrot.Utils;
 using System.Collections.Generic;
 
 namespace JackSParrot.Services.Network.Commands
 {
-    public interface IEventTracker
+    public interface IEventTracker : System.IDisposable
     {
         void TrackEvent(string category, string userID, JSONObject data);
         void PersistPending();
@@ -93,6 +93,11 @@ namespace JackSParrot.Services.Network.Commands
                 SharedServices.GetService<CommandQueue>().AddCommand(new TrackEventCommand(id, obj, OnTrackResponse));
                 _pending.Add(id, obj.Clone().AsObject());
             }
+        }
+        
+        public void Dispose()
+        {
+        
         }
     }
 }
