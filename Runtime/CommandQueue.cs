@@ -2,7 +2,7 @@ using System.Collections.Generic;
 
 namespace JackSParrot.Services.Network.Commands
 {
-    public interface ICommandQueue
+    public interface ICommandQueue : System.IDisposable
     {
         void AddCommand(Command command);
         void Send();
@@ -84,6 +84,11 @@ namespace JackSParrot.Services.Network.Commands
         {
             packet.ParseResponse(pet.GetResponse(), pet.Error);
             Utils.SharedServices.GetService<EventTracker>()?.PersistPending();
+        }
+        
+        public void Dispose()
+        {
+        
         }
     }
 }
