@@ -39,7 +39,7 @@ namespace JackSParrot.Services.Network.Commands
             {
                 try
                 {
-                    parsedResponse = JSON.JSON.LoadString(data);
+                    parsedResponse = JSON.JSON.LoadString(data) as JSONObject;
                 }
                 catch (Exception gotcha)
                 {
