@@ -24,7 +24,7 @@ namespace JackSParrot.Services.Network.Commands
                 string text = System.IO.File.ReadAllText(_path);
                 try
                 {
-                    JSONObject jsonfile = JSON.JSON.LoadString(text);
+                    JSONObject jsonfile = JSON.JSON.LoadString(text) as JSONObject;
                     foreach(var kvp in jsonfile)
                     {
                         uint id = 0;
