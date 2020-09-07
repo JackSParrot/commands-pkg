@@ -7,5 +7,5 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - run: curl https://script.google.com/macros/s/AKfycbyDbHOFakSKQUYcb2lZ3NLuj7Ktg9ELxXpt44wtdlc78wXaGnEQ/exec?name=es.jacksparrot.commands&sha=$GITHUB_SHA
+      - run: curl https://script.google.com/macros/s/AKfycbyDbHOFakSKQUYcb2lZ3NLuj7Ktg9ELxXpt44wtdlc78wXaGnEQ/exec?name=es.jacksparrot.commands&sha=${{ github.sha }}
 
