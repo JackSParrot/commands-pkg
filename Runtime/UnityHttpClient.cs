@@ -27,7 +27,6 @@ namespace JackSParrot.Services.Network.Commands
                 var request = new UnityWebRequest(petition.Url);
                 request.method = petition.Method == Petition.SendMethod.Post ? UnityWebRequest.kHttpVerbPOST : UnityWebRequest.kHttpVerbGET;
                 request.useHttpContinue = false;
-                request.chunkedTransfer = false;
                 request.redirectLimit = 50;
                 request.timeout = 60;
                 if(petition.Method == Petition.SendMethod.Post)
